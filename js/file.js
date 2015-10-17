@@ -134,7 +134,7 @@ function load_list(data) {
             if (file.isDir) {
                 item = item.format("index.html?oauth=" + getOauth() + "&path=" + file.path, "folder", file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), "", file.path, file.isFile, file.name);
             } else {
-                item = item.format("/src" + file.path, getFileTypeCss(file.name), file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), renderSize(file.size), file.path, file.isFile, file.name);
+                item = item.format("/src" + file.path + "?oauth=" + getOauth(), getFileTypeCss(file.name), file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), renderSize(file.size), file.path, file.isFile, file.name);
             }
             $('#content').append(item);
 
