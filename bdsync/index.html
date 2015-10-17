@@ -27,6 +27,10 @@
         $(document).ready(function () {
 
             back_bind();
+			
+			$('#report').bind('click', function () {
+				window.location.replace('report.html?oauth=' + getOauth());
+			});
 
             $.ajax({url: "{0}{1}.php?oauth={2}&action=status".format(bdsync_service, randomInt(), getOauth()), success: function (data) {
                 if (data && data.code == 200){
@@ -109,7 +113,7 @@
             </div>
         </li>
         <li class="list-item">
-            <a href="report.html" >
+            <a href="#" id="report" >
                 <div class="box">
                     <div class="content">统计</div>
                     <div class="service_operate text_right" >&gt;&gt;</div>
