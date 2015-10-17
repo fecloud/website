@@ -46,7 +46,7 @@
          */
         function add_photos(name) {
 
-            $.ajax({url: "{0}{1}.php?action=new_photos&token={2}&value=/{3}".format(photos_service, randomInt(), getToken(), name),
+            $.ajax({url: "{0}{1}.php?action=new_photos&oauth={2}&value=/{3}".format(photos_service, randomInt(), getOauth(), name),
                 success: function (data) {
 
                     if (data && data.data) {
@@ -59,7 +59,7 @@
 
         function load_data() {
 
-            $.ajax({url: "{0}{1}.php?action=list_photos&token={2}&value=/".format(photos_service, randomInt(), getToken()),
+            $.ajax({url: "{0}{1}.php?action=list_photos&oauth={2}&value=/".format(photos_service, randomInt(), getOauth()),
                 success: function (data) {
 
                     if (data && data.data) {

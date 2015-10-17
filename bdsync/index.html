@@ -28,7 +28,7 @@
 
             back_bind();
 
-            $.ajax({url: "{0}{1}.php?action=status".format(bdsync_service, randomInt(), getToken()), success: function (data) {
+            $.ajax({url: "{0}{1}.php?oauth={2}&action=status".format(bdsync_service, randomInt(), getOauth()), success: function (data) {
                 if (data && data.code == 200){
                     $("#bdsync_status").html("正常");
                 } else {
@@ -46,7 +46,7 @@
         });
 		
 		function client_env() {
-			$.ajax({url: "{0}{1}.php?action=status_ment".format(bdsync_service, randomInt(), getToken()), success: function (data) {
+			$.ajax({url: "{0}{1}.php?oauth={2}&action=status_ment".format(bdsync_service, randomInt(), getOauth()), success: function (data) {
                 if (data && data.code == 200) {
                     var server_data = data.data;
 

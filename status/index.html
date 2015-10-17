@@ -51,7 +51,7 @@
 
             var allow_contrl = false;
 
-            $.ajax({url: "{0}{1}.php?action=status&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=status&oauth={2}".format(status_service, randomInt(), getOauth()), success: function (data) {
 
                 var status = data.data;
 
@@ -111,7 +111,7 @@
 
             }});
 
-            $.ajax({url: "{0}{1}.php?action=uptime&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=uptime&oauth={2}".format(status_service, randomInt(), getOauth()), success: function (data) {
 
                 if (data.data && data.data.load) {
                     $('#load').html(data.data.load);
@@ -127,7 +127,7 @@
 
             }});
 
-            $.ajax({url: "{0}{1}.php?action=df&token={2}&value={3}".format(status_service, randomInt(), getToken(), "/dev/sda2"), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=df&oauth={2}&value={3}".format(status_service, randomInt(), getOauth(), "/dev/sda2"), success: function (data) {
 
                 if (data.data) {
                     var arr = data.data;
@@ -145,7 +145,7 @@
 
             }});
 
-            $.ajax({url: "{0}{1}.php?action=server_uptime&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=server_uptime&oauth={2}".format(status_service, randomInt(), getOauth()), success: function (data) {
 
                 if (data.data) {
                     $('#server_uptime').html(data.data);
@@ -155,6 +155,7 @@
 
             }});
 
+            /*
             function start_stop_service(sw, checked, name, subname) {
                 var req = "";
                 if(checked){
@@ -177,6 +178,7 @@
                 }});
                 allow_contrl = false;
             }
+            */
 
         });
 

@@ -68,7 +68,7 @@ function uploadFile() {
 
     xhr.addEventListener("abort", uploadCanceled, false);
 
-    xhr.open("POST", "{0}{1}.php?action=upload&token={2}&value={3}".format(filemanager_service, randomInt(), getToken(), current_path));
+    xhr.open("POST", "{0}{1}.php?action=upload&oauth={2}&value={3}".format(filemanager_service, randomInt(), getOauth(), current_path));
     xhr.send(fd);
     $('.progress-bar b').width(0);
 }

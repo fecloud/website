@@ -39,7 +39,7 @@
 
         function query_live() {
 
-            $.ajax({url: "{0}{1}.php?action=query_live&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=query_live&oauth={2}".format(status_service, randomInt(), getOauth()), success: function (data) {
 
                 var status = data.data;
                 if(status) {

@@ -17,8 +17,8 @@
 
         $(document).ready(function () {
 
-            if (($.cookie('uname') && $.cookie('token'))) {
-                window.location.replace('main.html?token=' +  getToken());
+            if ($.cookie('oauth')) {
+                window.location.replace('main.html?oauth=' +  getOauth());
             }
 
             $('#login_btn').bind('click', login);
@@ -60,15 +60,14 @@
                 $('passwd').focus();
             } else {
 
-                var url = "{0}{1}.php?action=login&value=/&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
+                var url = "{0}{1}.php?action=login&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
 
                 $.ajax({url: url, success: function (data) {
 
                     if (data && data.data) {
                         //保存到cookie
-                        $.cookie('uname', data.data.uname, { expires: 100 });
-                        $.cookie('token', data.data.token, { expires: 100 });
-                        window.location.replace('main.html?token=' +  getToken());
+                        $.cookie('oauth', data.data, { expires: 100 });
+                        window.location.replace('main.html?oauth=' +  getOauth());
                     } else {
                         alert("用户名或者密码错误");
                         $('#uname').focus();

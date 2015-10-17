@@ -219,11 +219,11 @@ function agentWechatOrQQ() {
 /**
  * 取token
  */
-function getToken() {
+function getOauth() {
 
-    var tk = $.cookie('token');
+    var tk = $.cookie('oauth');
     if (!tk) {
-        tk = getArgs("token");
+        tk = getArgs("oauth");
     }
     return tk;
 

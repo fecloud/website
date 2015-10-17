@@ -64,7 +64,7 @@ function comp_photos_width() {
  */
 function load_data() {
 
-    $.ajax({url: "{0}{1}.php?action=get_album_pics&token={2}&value={3}".format(photos_service, randomInt(), getToken(), path),
+    $.ajax({url: "{0}{1}.php?action=get_album_pics&oauth={2}&value={3}".format(photos_service, randomInt(), getOauth(), path),
         success: function (data) {
 
             if (data && data.data) {
@@ -144,7 +144,7 @@ function uploadFile(b) {
 
     xhr.addEventListener("abort", uploadCanceled, false);
 
-    xhr.open("POST", "{0}{1}.php?action=save_photos&token={2}&value={3}".format(photos_service, randomInt(), getToken(), path));
+    xhr.open("POST", "{0}{1}.php?action=save_photos&oauth={2}&value={3}".format(photos_service, randomInt(), getOauth(), path));
     xhr.send(fd);
     $('.progress-bar b').width(0);
 }

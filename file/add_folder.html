@@ -48,7 +48,7 @@
             if (folder_name == '') {
                 alert("请输入文件夹名!");
             } else {
-                $.ajax({url: "{0}{1}.php?action=newfolder&token={2}&value={3}".format(filemanager_service, randomInt(), getToken(), current_path + "/" + folder_name),
+                $.ajax({url: "{0}{1}.php?action=newfolder&oauth={2}&value={3}".format(filemanager_service, randomInt(), getOauth(), current_path + "/" + folder_name),
                     success: function (data) {
                         window.location.replace('index.html?path=' + current_path);
                     }

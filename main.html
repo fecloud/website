@@ -24,11 +24,11 @@
 
             });
 
-            $("#file").attr("href",function() { return "file?token=" + getToken()});
-            $("#live").attr("href",function() { return "live?token=" + getToken()});
-            $("#bdfs").attr("href",function() { return "bdsync?token=" + getToken()});
-            $("#photos").attr("href",function() { return "photos?token=" + getToken()});
-            $("#status").attr("href",function() { return "status?token=" + getToken()});
+            $("#file").attr("href",function() { return "file?oauth=" + getOauth()});
+            $("#live").attr("href",function() { return "live?oauth=" + getOauth()});
+            $("#bdfs").attr("href",function() { return "bdsync?oauth=" + getOauth()});
+            $("#photos").attr("href",function() { return "photos?oauth=" + getOauth()});
+            $("#status").attr("href",function() { return "status?oauth=" + getOauth()});
 
 
         });
