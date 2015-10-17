@@ -1,0 +1,20 @@
+#!/bin/sh
+
+PROG="website"
+PROG_PATH="/data/app/$PROG"
+MSG_PREFIX=" *"
+echo "$MSG_PREFIX start install $PROG"
+
+
+if [ -d "$PROG_PATH" ] ; then
+    rm -rf $PROG_PATH
+fi
+
+mkdir -p $PROG_PATH
+
+cp -v -n -r * $PROG_PATH/
+
+echo "$MSG_PREFIX install sucess $PROG"
+
+
+
