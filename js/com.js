@@ -221,11 +221,11 @@ function agentWechatOrQQ() {
  */
 function getOauth() {
 
-    var tk = $.cookie('oauth');
-    if (!tk) {
-        tk = getArgs("oauth");
+    var oauth = $.cookie('oauth');
+    if (!oauth) {
+        oauth = getArgs("oauth");
     }
-    return tk;
+    return oauth;
 
 }
 

@@ -60,7 +60,7 @@
                 $('passwd').focus();
             } else {
 
-                var url = "{0}{1}.php?action=login&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
+                var url = "{0}login/{1}.php?action=login&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
 
                 $.ajax({url: url, success: function (data) {
 
