@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>视频监控</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <style type="text/css">
+
+        #live_wrapper {
+            margin: auto;
+        }
+
+        .palyer {
+            text-align: center;
+            margin: 40px auto;
+        }
+
+        .m_palyer {
+            margin: 0px auto;
+        }
+
+        .palyer div {
+            text-align: center;
+        }
+
+
+    </style>
+    <script type="text/javascript" src="jwplayer.js"></script>
+    <script type="text/javascript">jwplayer.key = "rytNXDdMmiI9UxyjCqNvHK67C8N/r5IpvvQIJA==";</script>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript">
+
+        function query_live() {
+
+            $.ajax({url: "{0}{1}.php?action=query_live&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+
+                var status = data.data;
+                if(status) {
+                    player(status);
+                }else {
+                    $('#live').html("加载出错,请重试");
+                }
+
+            }});
+
+        }
+
+        function player(url) {
+            var address = location.hostname;
+            var user_agent = agent();
+            if (user_agent == 'pc') {
+                jwplayer("live").setup({
+                    file: "rtmp://" + address + url,
+                    height: 480,
+                    width: 640,
+                    rtmp:{ bufferlength: 1 }
+                });
+            } else {
+
+                //改变样式
+                $('#palyer_container').addClass('m_palyer');
+
+                var w = $(window).width();
+                var h = $(window).height() - 41;
+                //如果是从微信或者是QQ的不用多41
+                if (agentWechatOrQQ()) {
+                    h = $(window).height()
+                }
+                jwplayer("live").setup({
+                    file: "https://" + address + url + ".m3u8",
+                    height: h,
+                    width: w
+                });
+
+            }
+
+            jwplayer().play();
+        }
+
+        $(document).ready(function () {
+
+            if (agentWechatOrQQ()) {
+                $('#header').css('display', 'none')
+            }
+
+            query_live();
+
+            back_bind();
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+
+<div id="page">
+
+    <div id="header">
+
+        <div class="btn back_btn">返回</div>
+        <h1>视频监控</h1>
+
+        <div style=" width: 50px;height: 30px;"></div>
+
+    </div>
+
+
+    <div id="palyer_container" class="palyer">
+        <div id="live">Loading the player...</div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+</html>

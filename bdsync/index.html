@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>百度网盘同步</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <link rel="stylesheet" href="../css/status.css"/>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript" src="../js/html5.js"></script>
+    <style type="text/css">
+
+		.txt-over {
+			text-overflow: ellipsis; 
+			overflow: hidden; 
+			white-space: nowrap; 
+		}
+    </style>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            back_bind();
+
+            $.ajax({url: "{0}{1}.php?action=status".format(bdsync_service, randomInt(), getToken()), success: function (data) {
+                if (data && data.code == 200){
+                    $("#bdsync_status").html("正常");
+                } else {
+					$("#bdsync_status").html("故障");
+                    $("#bdsync_status").css('color','red');
+
+				}
+            }, error: function () {
+				$("#bdsync_status").html("故障");
+                $("#bdsync_status").css('color','red');
+			}});
+			
+			client_env();
+
+        });
+		
+		function client_env() {
+			$.ajax({url: "{0}{1}.php?action=status_ment".format(bdsync_service, randomInt(), getToken()), success: function (data) {
+                if (data && data.code == 200) {
+                    var server_data = data.data;
+
+					if (server_data.syncworking) {
+                        $("#bdsync_syncworking").html(server_data.syncworking);
+                    }
+
+					if (server_data.syncworkingcode) {
+						if (server_data.syncworkingcode == 4) {
+							$("#bdsync_file_status").html("下载中");
+						} else if (server_data.syncworkingcode == 8) {
+							$("#bdsync_file_status").html("上传中");
+						} else {
+							$("#bdsync_file_status").html("...");
+						}
+					}
+
+					if (server_data.dofile) {
+						$("#bdsync_file_name").html(server_data.dofile.path.substring(server_data.dofile.path.lastIndexOf('/') + 1));
+						$("#bdsync_file_length").html(renderSize(server_data.dofile.length));
+					} else {
+						$("#bdsync_file_name").html("...");
+                        $("#bdsync_file_length").html("...");
+					}
+
+					if (server_data.dofile_size) {
+						 $("#bdsync_commit_size").html(renderSize(server_data.dofile_size));
+					} else {
+						$("#bdsync_commit_size").html("...");
+					}
+
+				}
+				setTimeout("client_env()",2000); 
+            }, error: function () {
+				setTimeout("client_env()",2000);
+			}});	
+		}
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <div id="header">
+
+        <div class="btn back_btn">返回</div>
+        <h1>百度网盘同步</h1>
+        <div style=" width: 50px;height: 30px;"></div>
+
+    </div>
+
+    <ul class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">服务状态</div>
+                <div class="service_operate text_right" id="bdsync_status">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <a href="report.html" >
+                <div class="box">
+                    <div class="content">统计</div>
+                    <div class="service_operate text_right" >&gt;&gt;</div>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">同步状态</div>
+                <div class="service_operate text_right" id="bdsync_syncworking">...</div>
+            </div>
+            
+        </li>
+    </ul>
+
+    <ul id="upload" class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">当前状态</div>
+                <div class="service_operate text_right" id="bdsync_file_status">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">文件名称</div>
+                <div class="service_operate text_right content txt-over" id="bdsync_file_name">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">文件大小</div>
+                <div class="service_operate text_right" id="bdsync_file_length">...</div>
+            </div>
+        </li>
+		<li class="list-item">
+            <div class="box">
+                <div class="content">已完成</div>
+                <div class="service_operate text_right" id="bdsync_commit_size">...</div>
+            </div>
+        </li>
+    </ul>
+	
+</div>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的相册</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <link rel="stylesheet" href="../css/photos.css"/>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/base64.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.md5.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            if (agentWechatOrQQ()) {
+                $('#header').css('display','none');
+            }
+
+            back_bind();
+
+            load_data();
+
+            $('#add_photos').bind('click', function () {
+
+                if (agent() == 'pc') {
+
+                } else {
+                    var name = prompt("请输入相册名", "")
+                    if (name != null && name != "") {
+                        add_photos(name);
+                    }
+                }
+            });
+
+        });
+
+        /**
+         * 添加相册
+         * @param name
+         */
+        function add_photos(name) {
+
+            $.ajax({url: "{0}{1}.php?action=new_photos&token={2}&value=/{3}".format(photos_service, randomInt(), getToken(), name),
+                success: function (data) {
+
+                    if (data && data.data) {
+                        $('#content').html("");
+                        load_data();
+                    }
+
+                }});
+        }
+
+        function load_data() {
+
+            $.ajax({url: "{0}{1}.php?action=list_photos&token={2}&value=/".format(photos_service, randomInt(), getToken()),
+                success: function (data) {
+
+                    if (data && data.data) {
+                        data.data.forEach(function (album) {
+
+                            var h = "<div><a class=\"photos\" href=\"album.html?token="+ getToken() + "&path=" + album.path + "&name=" + album.name + "\"><div style=\"background-image: url(";
+                            if (album.first) {
+                                h += thum + $.md5(album.first.path + "_160_160") + ".jpg";
+                            } else {
+                                h += "/img/empty_photos.png";
+                            }
+                            h += ");\" class=\"album\"></div><div class=\"album_desc\"><h3>" + album.name + "</h3><span>" + album.num + "</span></div><div class=\"show-operate\"><i class=\"idown\"></i></div></a></div>";
+                            $('#content').append(h);
+                        });
+                    }
+
+
+                }});
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <div id="header">
+        <!--<a href="/file/">-->
+
+        <div class="btn back_btn">返回</div>
+        <h1>我的相册</h1>
+
+        <div class="btn" id="add_photos">添加</div>
+
+        <!--</a>-->
+    </div>
+    <div id="content" class="content content-index">
+
+
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--<a class="photos" href="#">-->
+        <!--<div class="album"></div>-->
+        <!--<div class="album_desc">-->
+        <!--<h3>相册名</h3>-->
+        <!--<span>120</span>-->
+        <!--</div>-->
+        <!--<div class="show-operate"><i class="idown"></i></div>-->
+        <!--</a>-->
+        <!--</div>-->
+    </div>
+
+
+</body>
+</html>

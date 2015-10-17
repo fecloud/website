@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的相册</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <link rel="stylesheet" href="../css/photos.css"/>
+    <link rel="stylesheet" href="../css/progress.css"/>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/jquery.md5.js"></script>
+    <script type="text/javascript" src="../js/base64.min.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript" src="../js/album.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+    <div id="header">
+        <!--<a href="/file/">-->
+
+        <div class="btn back_btn">返回</div>
+        <h1 id="ti">我的相册</h1>
+
+        <div class="btn upload_btn" style="float: right ;overflow: hidden;">
+
+
+        </div>
+
+        <!--</a>-->
+    </div>
+    <div id="li_progress" class="list-item tools_bar" style="display: none;border-bottom: solid 1px #c8c7cc;">
+        <div class="li_progress content" style="margin-left: 0px">
+            <div id="detail" class="detail"><span id="details"></span>
+            </div>
+            <div id="progress_bar" class="progress_bar"><b></b><span class="progress_num"></span></div>
+        </div>
+    </div>
+    <div class="upload-div">
+        <div class="upload-item">上传图片
+            <input type="file" id="upload" class="upload_file"/>
+        </div>
+        <div class="upload-item upload-item-right">多张图片
+            <input type="file" id="upload-mu" class="upload_file" multiple="multiple"/>
+        </div>
+    </div>
+    <div id="content">
+
+
+    </div>
+</div>
+
+</body>
+</html>

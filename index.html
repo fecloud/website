@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/com.css"/>
+    <link rel="stylesheet" href="css/login.css"/>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/com.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            if (($.cookie('uname') && $.cookie('token'))) {
+                window.location.replace('main.html?token=' +  getToken());
+            }
+
+            $('#login_btn').bind('click', login);
+            $('#uname').bind('keypress', function (event) {
+
+                if (event.keyCode == "13") {
+                    $('#passwd').focus();
+                }
+            });
+            $('#passwd').bind('keypress', function (event) {
+
+                if (event.keyCode == "13") {
+                    login();
+                }
+            });
+
+            if (agent() == 'iPhone') {
+                $('#container').addClass('continer_iphone');
+            }
+            //ipad pc 登录框
+            else {
+                $('#container').addClass('continer_ipad_pc');
+                $('#login_box').addClass('login_box_ipad');
+            }
+
+        });
+
+        /**
+         * 登录
+         */
+        function login() {
+
+            var uname = $.trim($('#uname').val());
+            var passwd = $.trim($('#passwd').val());
+
+            if (uname == "") {
+                $('#uname').focus();
+            } else if (passwd == "") {
+                $('passwd').focus();
+            } else {
+
+                var url = "{0}{1}.php?action=login&value=/&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
+
+                $.ajax({url: url, success: function (data) {
+
+                    if (data && data.data) {
+                        //保存到cookie
+                        $.cookie('uname', data.data.uname, { expires: 100 });
+                        $.cookie('token', data.data.token, { expires: 100 });
+                        window.location.replace('main.html?token=' +  getToken());
+                    } else {
+                        alert("用户名或者密码错误");
+                        $('#uname').focus();
+                    }
+
+                }});
+
+            }
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="container" class="container">
+
+    <i id="icon"></i>
+
+    <div id="login_box">
+        <div class="list-item" style="height: 45px;">
+            <div class="box" id="uname_box">
+                <div class="content">帐号</div>
+                <div class="input_box"><input type="text" placeholder="用户帐号" id="uname"
+                                              class="login_input"/></div>
+            </div>
+        </div>
+        <div class="list-item">
+            <div class="box">
+                <div class="content">密码</div>
+                <div class="input_box"><input type="password" placeholder="用户密码" id="passwd"
+                                              class="login_input"/></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login_btn">登录</div>
+
+</div>
+
+</body>
+</html>

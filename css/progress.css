@@ -1,0 +1,66 @@
+.li_progress {
+
+    padding-top:5px;
+    padding-bottom: 5px;
+}
+.detail {
+    /*height: 16px;*/
+    overflow: hidden;
+    /*line-height: 16px;*/
+    -moz-transition: all 250ms ease;
+    -webkit-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    transition: all 250ms ease;
+}
+
+.detail span {
+    text-overflow: ellipsis;
+    verflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+.progress_bar {
+    width: auto;
+    overflow: hidden;
+    height: 10px;
+    border: solid 1px #DFDFDF;
+    text-align: center;
+}
+
+.progress_bar b {
+    width: 0px;
+    height: 8px;
+    background: #007aff;
+    display: block;
+    margin: 1px;
+    position: absolute;
+}
+
+.progress_num {
+    display: inline-block;
+    position: relative;
+    font-size: 10px;
+    top: -5px;
+}
+
+form {
+    width: 50px;
+    height: 32px;
+    padding: 0px;
+}
+
+.upload, u_span {
+    width: 50px;
+    height: 32px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    opacity: 0;
+}
+
+.u_span {
+    z-index: 2;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新建文件夹</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <link rel="stylesheet" href="../css/file.css"/>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript">
+        var current_path = '/';
+
+        $(document).ready(function () {
+
+            if (agentWechatOrQQ()) {
+                $('#header').css('display','none');
+            }
+
+            var path = getArgs('path');
+            if (path == '')
+                path = "/";
+            current_path = path;
+
+
+            back_bind('index.html');
+
+            $('#search_input').bind('keypress', function (event) {
+                if (event.keyCode == "13") {
+                    add_folder();
+                }
+            });
+
+            $('.upload_btn').bind('click', add_folder);
+
+
+        });
+
+        function add_folder() {
+
+            var folder_name = $('#search_input').val();
+
+            if (folder_name == '') {
+                alert("请输入文件夹名!");
+            } else {
+                $.ajax({url: "{0}{1}.php?action=newfolder&token={2}&value={3}".format(filemanager_service, randomInt(), getToken(), current_path + "/" + folder_name),
+                    success: function (data) {
+                        window.location.replace('index.html?path=' + current_path);
+                    }
+                });
+            }
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <div id="header">
+
+        <div class="btn back_btn">返回</div>
+        <h1>新建文件夹</h1>
+
+        <div class="btn upload_btn">确定</div>
+
+    </div>
+
+    <div class="addfolder_c">
+        <i class="file-icon folder" style="left: 5px;"></i>
+
+        <div class="input_bar" style="padding: 0px;border: none;left: 10px">
+            <input type="text" placeholder="输入文件夹名" id="search_input"
+                   style="display: block;width: 100%;height: 34px;border: 0px;margin: 0px;padding: 0px;font-size: 15px"/>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

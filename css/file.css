@@ -1,0 +1,108 @@
+.upload_btn {
+    /*right: 0px;*/
+    position: relative;
+    display: inline-block;
+}
+
+.list-item:hover {
+    background-color:#F7F7F7;
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-top: 2px;
+}
+
+.list .list-item {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.list-item-show {
+    height: 88px;
+}
+
+.file-desc {
+    padding-left: 10px;
+    padding-right: 0px;
+}
+
+.list-content {
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    color: #8e8e93;
+    font-size: 12px;
+}
+
+.file-operate {
+    border-top: solid 1px #c8c7cc;
+    background-color: #D9D9D9;
+    text-align: center;
+    font-size: 11px;
+    height: 44px;
+}
+
+.list-content span {
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
+
+.file-operate div {
+    text-align: center;
+    padding: 8px 0 4px 0;
+    cursor: pointer;
+}
+
+.file-operate i {
+    display: block;
+    margin: 0 auto;
+    font-size: 16px;
+}
+
+.show-operate {
+    width: 20px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+}
+
+.input_bar {
+    margin-left: 10px;
+    margin-bottom: 6px;
+    /*margin-right: 10px;*/
+    margin-top: 6px;
+    border: solid 1px #DFDFDF;
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -moz-box-flex: 1;
+    padding: 5px;
+    background-color: #FFFFFF;
+}
+
+.addfolder_c {
+    height: 45px;
+    border: solid 1px #DFDFDF;
+    top: 10px;
+    position: relative;
+    margin: 10px;
+    display: -moz-box;
+    display: -webkit-box;
+    display: box;
+    background-color: #FFFFFF;
+}
+
+.show-operate {
+    width: 30px;
+    text-align: left;
+}
+
+.idown {
+    margin-left: 5px;
+}

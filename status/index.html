@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>服务器状态</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
+    <link rel="apple-touch-icon-precomposed" href="/img/screen_icon.png"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="../css/com.css"/>
+    <link rel="stylesheet" href="../css/status.css"/>
+    <link rel="stylesheet" href="../css/switchery.min.css"/>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../js/com.js"></script>
+    <script type="text/javascript" src="../js/html5.js"></script>
+    <script type="text/javascript" src="../js/switchery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            if (agentWechatOrQQ()) {
+                $('#header').css('display','none');
+                $('#services').css('margin-top','0px');
+            }
+
+            var filemanager_switch = document.querySelector('.filemanager-switch');
+            var filemanager = new Switchery(filemanager_switch);
+
+            var arduino_switch = document.querySelector('.arduino-switch');
+            var arduino = new Switchery(arduino_switch);
+
+            var vlserver_switch = document.querySelector('.vlserver-switch');
+            var vlserver = new Switchery(vlserver_switch);
+
+            var vlrtmp_switch = document.querySelector('.vlrtmp-switch');
+            var vlrtmp = new Switchery(vlrtmp_switch);
+
+            var bdsync_switch = document.querySelector('.bdsync-switch');
+            var bdsync = new Switchery(bdsync_switch);
+
+            var photos_switch = document.querySelector('.photos-switch');
+            var photos = new Switchery(photos_switch);
+
+
+            var status = new Switchery(document.querySelector('.status-switch'), { disabled: true });
+
+
+            back_bind();
+
+            var allow_contrl = false;
+
+            $.ajax({url: "{0}{1}.php?action=status&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+
+                var status = data.data;
+
+                if (!status) {
+                    return;
+                }
+
+                if (status.filemanager) {
+                    filemanager_switch.click();
+                }
+                filemanager_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(filemanager_switch, this.checked, "httpd", "filemanager");
+                };
+                if (status.arduino) {
+                    arduino_switch.click();
+                }
+                arduino_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(arduino_switch, this.checked, "httpd", "arduino");
+                };
+				if (status.vlserver) {
+					vlserver_switch.click();
+				}
+                vlserver_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(vlserver_switch, this.checked, "vlserver", "");
+                };
+                if (status.vlrtmp) {
+                    vlrtmp_switch.click();
+                }
+                vlrtmp_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(vlrtmp_switch, this.checked, "vlrtmp", "");
+                };
+                if (status.bdsync) {
+                    bdsync_switch.click();
+                }
+                bdsync_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(bdsync_switch, this.checked, "httpd", "bdsync");
+                };
+                if (status.photos) {
+                    photos_switch.click();
+                }
+                photos_switch.onchange = function () {
+                    if (allow_contrl)
+                        start_stop_service(photos_switch, this.checked, "httpd", "photos");
+                };
+                allow_contrl = true;
+
+                $('#arch').html(status.arch);
+                $('#core').html(status.core);
+                $('#platform').html(status.platform);
+                $('#version').html(status.version);
+                $('#uptime').html(mToH(parseInt(status.uptime)));
+
+            }});
+
+            $.ajax({url: "{0}{1}.php?action=uptime&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+
+                if (data.data && data.data.load) {
+                    $('#load').html(data.data.load);
+                } else {
+                    $('#load').html('暂无');
+                }
+
+                if (data.data && data.data.server_time) {
+                    $('#server_time').html(data.data.server_time);
+                } else {
+                    $('#server_time').html('暂无');
+                }
+
+            }});
+
+            $.ajax({url: "{0}{1}.php?action=df&token={2}&value={3}".format(status_service, randomInt(), getToken(), "/dev/sda2"), success: function (data) {
+
+                if (data.data) {
+                    var arr = data.data;
+                    $('#quota').html(arr[1]);
+                    $('#used').html(arr[2]);
+                    $('#free').html(arr[3]);
+                    $('#used_free').html(arr[4]);
+                } else {
+                    $('#quota').html('暂无');
+                    $('#used').html('暂无');
+                    $('#free').html('暂无');
+                    $('#used_free').html('暂无');
+                }
+
+
+            }});
+
+            $.ajax({url: "{0}{1}.php?action=server_uptime&token={2}".format(status_service, randomInt(), getToken()), success: function (data) {
+
+                if (data.data) {
+                    $('#server_uptime').html(data.data);
+                } else {
+                    $('#server_uptime').html('暂无');
+                }
+
+            }});
+
+            function start_stop_service(sw, checked, name, subname) {
+                var req = "";
+                if(checked){
+                    req = "{0}{1}.php?token={2}&action=start_service&values={3}&sub={4}".format(status_service, randomInt(), getToken(), name, subname);
+                }else {
+                    req = "{0}{1}.php?token={2}&action=stop_service&values={3}&sub={4}".format(status_service, randomInt(), getToken(), name, subname);
+                }
+
+                $.ajax({url: req, success: function (data) {
+
+                    if (!data.data) {
+                        sw.click();
+                    }
+                    allow_contrl = true;
+                }, complete: function(XMLHttpRequest, textStatus) {
+                    if (XMLHttpRequest.status !== 200) {
+                        sw.click();
+                        allow_contrl = true;
+                    }
+                }});
+                allow_contrl = false;
+            }
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="page">
+
+    <div id="header">
+
+        <div class="btn back_btn">返回</div>
+        <h1>服务器状态</h1>
+
+        <div style=" width: 50px;height: 30px;"></div>
+
+    </div>
+
+    <ul id="services" class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">文件管理服务</div>
+                <div class="service_operate"><input type="checkbox" class="filemanager-switch" id="filemanager"/></div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">温度监控服务</div>
+                <div class="service_operate"><input type="checkbox" class="arduino-switch" id="arduino"/></div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">视频监控服务</div>
+                <div class="service_operate"><input type="checkbox" class="vlserver-switch" id="vlserver"/></div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">RTMPPulish服务</div>
+                <div class="service_operate"><input type="checkbox" class="vlrtmp-switch" id="vlrtmp"/></div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">百度网盘同步服务</div>
+                <div class="service_operate"><input type="checkbox" class="bdsync-switch" id="bdsync"/>
+                </div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">相册服务</div>
+                <div class="service_operate"><input type="checkbox" class="photos-switch" id="photos"/></div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">服务状态服务</div>
+                <div class="service_operate"><input type="checkbox" class="status-switch" id="status" checked/></div>
+            </div>
+        </li>
+
+    </ul>
+
+    <ul id="env" class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">CPU</div>
+                <div class="service_operate text_right" id="arch">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">核心数</div>
+                <div class="service_operate text_right" id="core">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">平台</div>
+                <div class="service_operate text_right" id="platform">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">软件版本</div>
+                <div class="service_operate text_right" id="version">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">软件运行时间</div>
+                <div class="service_operate text_right" id="uptime">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">服务器时间</div>
+                <div class="service_operate text_right" id="server_time">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">服务器负载</div>
+                <div class="service_operate text_right" id="load">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">服务器运行时间</div>
+                <div class="service_operate text_right" id="server_uptime">...</div>
+            </div>
+        </li>
+
+    </ul>
+
+
+    <ul id="disks" class="list group">
+        <li class="list-item">
+            <div class="box">
+                <div class="content">磁盘容量</div>
+                <div class="service_operate text_right" id="quota">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">已使用</div>
+                <div class="service_operate text_right" id="used">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">剩余</div>
+                <div class="service_operate text_right" id="free">...</div>
+            </div>
+        </li>
+        <li class="list-item">
+            <div class="box">
+                <div class="content">使用率</div>
+                <div class="service_operate text_right" id="used_free">...</div>
+            </div>
+        </li>
+
+    </ul>
+
+
+    <div style="text-align: center;margin: 10px 0 20px 0;" class="ios7_font">
+        Copyright FCloud, Inc
+    </div>
+
+</div>
+
+</body>
+</html>
