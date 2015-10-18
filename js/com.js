@@ -86,11 +86,15 @@ function getParentDir(path) {
     return path.substring(0, last);
 }
 
-function getFileTypeCss(name) {
-
+function getFileType(name) {
     var last = name.lastIndexOf('.');
     var fix = name.substring(last + 1);
     fix = fix.toLowerCase();
+    return fix;
+}
+
+function getFileTypeCss(name) {
+    var fix = getFileType(name);
     if (fix == 'apk') {
         return 'apk';
     } else if (fix == 'doc') {
@@ -243,6 +247,7 @@ var filemanager_service = "/service/filemanager/";
 var bdsync_service = "/service/bdsync/";
 var status_service = "/service/platform/";
 var platform_service = "/service/platform/";
+var imageview_service = "/service/imageview/"
 var photos_service = "/service/photos/";
 var thum = "/src/thum/";
 var photos_pic = "/src/photos";

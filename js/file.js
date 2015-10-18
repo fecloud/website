@@ -38,6 +38,7 @@ $(document).ready(function () {
 
         });
     });
+
     back_bind();
 
     $('.upload').bind('change', function (b) {
@@ -58,7 +59,6 @@ $(document).ready(function () {
             search();
         }
     });
-
 
 });
 
@@ -129,12 +129,20 @@ function load_list(data) {
         count += arr.length;
         for (var i = 0, len = arr.length; i < len; i++) {
             var file = arr[i];
-            var item = '<li class="list-item" src="{5}" file="{6}" name="{7}"><a href="{0}" class="box file-desc clean_right"><i class="file-icon {1}"></i><div class="box1 content"><h3>{2}</h3><div class="list-content">{3}<span>{4}</span></div></div><div class="show-operate"><i class="idown"></i></div></a><div class="box file-operate" ><div class="box1 file-rename"><i class="iedit"></i>重命名</div><div class="box1 file-delete" ><i class="iremove"></i>删除</div></div></li>';
+            var item = '<li class="list-item" src="{5}" file="{6}" name="{7}"><a href="{0}" class="box file-desc clean_right"><{8} class="file-icon {1}" {9} ></{8}><div class="box1 content"><h3>{2}</h3><div class="list-content">{3}<span>{4}</span></div></div><div class="show-operate"><i class="idown"></i></div></a><div class="box file-operate" ><div class="box1 file-rename"><i class="iedit"></i>重命名</div><div class="box1 file-delete" ><i class="iremove"></i>删除</div></div></li>';
             ;
             if (file.isDir) {
-                item = item.format("index.html?oauth=" + getOauth() + "&path=" + file.path, "folder", file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), "", file.path, file.isFile, file.name);
+                item = item.format("index.html?oauth=" + getOauth() + "&path=" + file.path, "folder", file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), "", file.path, file.isFile, file.name , "i", "");
             } else {
-                item = item.format("/src" + file.path + "?oauth=" + getOauth(), getFileTypeCss(file.name), file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), renderSize(file.size), file.path, file.isFile, file.name);
+                var type = getFileType(file.name);
+                var fix = "i";
+                var file_src = "";
+                if (type == "jpg") {
+                    fix = "img";
+                    var fix_format = "src=\"{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}\"";
+                    file_src = fix_format.format(imageview_service, getOauth(), file.path, 160, 160);
+                } 
+                item = item.format("/src" + file.path + "?oauth=" + getOauth(), getFileTypeCss(file.name), file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), renderSize(file.size), file.path, file.isFile, file.name, fix, file_src);
             }
             $('#content').append(item);
 
