@@ -12,7 +12,6 @@
     <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script type="text/javascript" src="../js/base64.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.md5.js"></script>
     <script type="text/javascript" src="../js/com.js"></script>
     <script type="text/javascript">
 
@@ -65,13 +64,14 @@
                     if (data && data.data) {
                         data.data.forEach(function (album) {
 
-                            var h = "<div><a class=\"photos\" href=\"album.html?token="+ getToken() + "&path=" + album.path + "&name=" + album.name + "\"><div style=\"background-image: url(";
+                            var h = "<div><a class=\"photos\" href=\"album.html?oauth="+ getOauth() + "&path=" + album.name + "&name=" + album.name + "\"><div style=\"background-image: url(";
                             if (album.first) {
-                                h += thum + $.md5(album.first.path + "_160_160") + ".jpg";
+                                var scale_img = "{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}";
+                                h += scale_img.format(imageview_service, getOauth(), "/photos" + album.first.path, 160, 160);
                             } else {
                                 h += "/img/empty_photos.png";
                             }
-                            h += ");\" class=\"album\"></div><div class=\"album_desc\"><h3>" + album.name + "</h3><span>" + album.num + "</span></div><div class=\"show-operate\"><i class=\"idown\"></i></div></a></div>";
+                            h += ");\" class=\"album\"></div><div class=\"album_desc\"><h3>" + album.name + "</h3><span>" + album.first.num + "</span></div><div class=\"show-operate\"><i class=\"idown\"></i></div></a></div>";
                             $('#content').append(h);
                         });
                     }
@@ -95,7 +95,7 @@
         <div class="btn back_btn">返回</div>
         <h1>我的相册</h1>
 
-        <div class="btn" id="add_photos">添加</div>
+        <div class="btn" id="add_photos" style="display:none">添加</div>
 
         <!--</a>-->
     </div>
