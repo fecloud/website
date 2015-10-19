@@ -28,8 +28,8 @@
             var filemanager_switch = document.querySelector('.filemanager-switch');
             var filemanager = new Switchery(filemanager_switch);
 
-            var arduino_switch = document.querySelector('.arduino-switch');
-            var arduino = new Switchery(arduino_switch);
+            var imageview_switch = document.querySelector('.imageview-switch');
+            var imageview = new Switchery(imageview_switch);
 
             var vlserver_switch = document.querySelector('.vlserver-switch');
             var vlserver = new Switchery(vlserver_switch);
@@ -62,46 +62,27 @@
                 if (status.filemanager) {
                     filemanager_switch.click();
                 }
-                filemanager_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(filemanager_switch, this.checked, "httpd", "filemanager");
-                };
-                if (status.arduino) {
-                    arduino_switch.click();
+                
+                if (status.imageview) {
+                    imageview_switch.click();
                 }
-                arduino_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(arduino_switch, this.checked, "httpd", "arduino");
-                };
+                
 				if (status.vlserver) {
 					vlserver_switch.click();
 				}
-                vlserver_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(vlserver_switch, this.checked, "vlserver", "");
-                };
+                
                 if (status.vlrtmp) {
                     vlrtmp_switch.click();
                 }
-                vlrtmp_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(vlrtmp_switch, this.checked, "vlrtmp", "");
-                };
+               
                 if (status.bdsync) {
                     bdsync_switch.click();
                 }
-                bdsync_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(bdsync_switch, this.checked, "httpd", "bdsync");
-                };
+                
                 if (status.photos) {
                     photos_switch.click();
                 }
-                photos_switch.onchange = function () {
-                    if (allow_contrl)
-                        start_stop_service(photos_switch, this.checked, "httpd", "photos");
-                };
-                allow_contrl = true;
+        
 
                 $('#arch').html(status.arch);
                 $('#core').html(status.core);
@@ -155,31 +136,6 @@
 
             }});
 
-            /*
-            function start_stop_service(sw, checked, name, subname) {
-                var req = "";
-                if(checked){
-                    req = "{0}{1}.php?token={2}&action=start_service&values={3}&sub={4}".format(status_service, randomInt(), getToken(), name, subname);
-                }else {
-                    req = "{0}{1}.php?token={2}&action=stop_service&values={3}&sub={4}".format(status_service, randomInt(), getToken(), name, subname);
-                }
-
-                $.ajax({url: req, success: function (data) {
-
-                    if (!data.data) {
-                        sw.click();
-                    }
-                    allow_contrl = true;
-                }, complete: function(XMLHttpRequest, textStatus) {
-                    if (XMLHttpRequest.status !== 200) {
-                        sw.click();
-                        allow_contrl = true;
-                    }
-                }});
-                allow_contrl = false;
-            }
-            */
-
         });
 
     </script>
@@ -208,8 +164,8 @@
         </li>
         <li class="list-item">
             <div class="box">
-                <div class="content">温度监控服务</div>
-                <div class="service_operate"><input type="checkbox" class="arduino-switch" id="arduino"/></div>
+                <div class="content">图片缩略图服务</div>
+                <div class="service_operate"><input type="checkbox" class="imageview-switch" id="imageview"/></div>
             </div>
         </li>
         <li class="list-item">
