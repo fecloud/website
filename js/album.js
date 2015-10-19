@@ -69,7 +69,7 @@ function load_data() {
 
             if (data && data.data) {
                 data.data.forEach(function (pic) {
-                    var h = "<div style=\"background-image: url({0});\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a></div>";
+                    var h = "<div style=\"background-image: url('{0}');\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a></div>";
                     var itme_thum = "/photos/" + getArgs("path") + "/" + pic ;
                     var itme_thum_formt = "{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}";
                     itme_thum = itme_thum_formt.format(imageview_service, getOauth(), encodeURI(itme_thum), 160, 160);
