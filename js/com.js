@@ -125,6 +125,46 @@ function getFileTypeCss(name) {
 }
 
 /**
+ * 根据后缀判断是否是图片
+ * @param file
+ * @returns {boolean}
+ */
+function is_pic(file) {
+
+    if (file) {
+
+        var last = file.lastIndexOf('.');
+        var fix = file.substring(last + 1);
+        fix = fix.toLowerCase();
+        if (fix == 'jpg' || fix == 'png' || fix == 'bmp' || fix == 'jpeg') {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+/**
+ * 根据后缀判断是否是视频
+ * @param file
+ */
+function is_video(file) {
+
+    if (file) {
+
+        var last = file.lastIndexOf('.');
+        var fix = file.substring(last + 1);
+        fix = fix.toLowerCase();
+        if (fix == 'mov' || fix == 'h264' || fix == 'mp4' || fix == '3gp' || fix == "mkv") {
+            return true;
+        }
+    }
+    return false;
+
+}
+
+/**
  * 格式化时间到天时分秒
  */
 function mToH(maxtime) {
@@ -249,5 +289,3 @@ var status_service = "/service/platform/";
 var platform_service = "/service/platform/";
 var imageview_service = "/service/imageview/"
 var photos_service = "/service/photos/";
-var thum = "/src/thum/";
-var photos_pic = "/src/photos";

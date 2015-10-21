@@ -134,10 +134,9 @@ function load_list(data) {
             if (file.isDir) {
                 item = item.format("index.html?oauth=" + getOauth() + "&path=" + file.path, "folder", file.name, new Date(file.mtime).format("yyyy-MM-dd hh:mm:ss"), "", file.path, file.isFile, file.name , "i", "");
             } else {
-                var type = getFileType(file.name);
                 var fix = "i";
                 var file_src = "";
-                if (type == "jpg") {
+                if (is_pic(file.name) || is_video(file.name)) {
                     fix = "img";
                     var fix_format = "src=\"{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}\"";
                     file_src = fix_format.format(imageview_service, getOauth(), file.path, 160, 160);
