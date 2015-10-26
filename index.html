@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/com.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/base64.min.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -65,9 +66,15 @@
                 $.ajax({url: url, success: function (data) {
 
                     if (data && data.data) {
-                        //保存到cookie
-                        $.cookie('oauth', data.data, { expires: 100 });
-                        window.location.replace('main.html?oauth=' +  getOauth());
+                        
+                        if (getArgs("callback") !== ""){
+                            var jump = Base64.decode(getArgs("callback")) + data.data;
+                            window.location = jump
+                        } else {
+                            //保存到cookie
+                            $.cookie('oauth', data.data, { expires: 100 });
+                            window.location.replace('main.html?oauth=' +  getOauth());
+                        }
                     } else {
                         alert("用户名或者密码错误");
                         $('#uname').focus();
