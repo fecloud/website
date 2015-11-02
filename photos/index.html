@@ -64,13 +64,13 @@
                         data.data.forEach(function (album) {
 
                             var h = "<div><a class=\"photos\" href=\"album.html?oauth="+ getOauth() + "&path=" + album.name + "&name=" + album.name + "\"><div style=\"background-image: url('";
-                            if (album.first) {
+                            if (album.path) {
                                 var scale_img = "{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}";
-                                h += scale_img.format(imageview_service, getOauth(), encodeURI("/photos" + album.first.path), 160, 160);
+                                h += scale_img.format(imageview_service, getOauth(), encodeURI("/photos" + album.path), 160, 160);
                             } else {
                                 h += "/img/empty_photos.png";
                             }
-                            h += "');\" class=\"album\"></div><div class=\"album_desc\"><h3>" + album.name + "</h3><span>" + album.first.num + "</span></div><div class=\"show-operate\"><i class=\"idown\"></i></div></a></div>";
+                            h += "');\" class=\"album\"></div><div class=\"album_desc\"><h3>" + album.name + "</h3><span>" + album.num + "</span></div><div class=\"show-operate\"><i class=\"idown\"></i></div></a></div>";
                             $('#content').append(h);
                         });
                     }
