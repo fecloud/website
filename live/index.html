@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/com.css"/>
     <style type="text/css">
 
-        #live_wrapper {
+        #live {
             margin: auto;
         }
 
@@ -31,7 +31,7 @@
 
     </style>
     <script type="text/javascript" src="jwplayer.js"></script>
-    <script type="text/javascript">jwplayer.key = "rytNXDdMmiI9UxyjCqNvHK67C8N/r5IpvvQIJA==";</script>
+    <script type="text/javascript">jwplayer.key = "BIpG701ziNJ30CivhZlGipkUsDNM2kWhNhm97Q==";</script>
     <script type="text/javascript" src="../js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <script type="text/javascript" src="../js/com.js"></script>
@@ -55,12 +55,12 @@
         function player(url) {
             var address = location.hostname;
             var user_agent = agent();
-            if (user_agent == 'pc') {
+            if (user_agent == 'pc' && getArgs("hls") === '') {
                 jwplayer("live").setup({
                     file: "rtmp://" + address + url,
                     height: 480,
                     width: 640,
-                    rtmp:{ bufferlength: 1 }
+                    rtmp:{ bufferlength: 0.5 }
                 });
             } else {
 
