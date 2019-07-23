@@ -22,10 +22,6 @@
                 window.location.replace("index.html");
 
             });
-
-            $("#file").attr("href",function() { return "file?oauth=" + getOauth()});
-            $("#live").attr("href",function() { return "live?oauth=" + getOauth()});
-            $("#bdfs").attr("href",function() { return "bdsync?oauth=" + getOauth()});
             $("#photos").attr("href",function() { return "photos?oauth=" + getOauth()});
             $("#status").attr("href",function() { return "status?oauth=" + getOauth()});
 
@@ -42,18 +38,11 @@
 
     <div id="header">
 
-        <h1>FCloud</h1>
+        <h1>MOCAR</h1>
 
     </div>
 
     <ul class="list group menu">
-
-        <li id="div1" class="list-item menu-item" >
-            <a href="#" id="file" >
-                <i class="icon" style="background-image: url('img/file_manager.png')" ></i>
-                <i class="labl" >文件管理</i>
-            </a>
-        </li>
 
         <li id="div1" class="list-item menu-item">
             <a href="#" id="photos" >
@@ -70,37 +59,9 @@
         </li>
 
         <li id="div1" class="list-item menu-item" >
-            <a href="#" id="bdfs" >
-                <i class="icon" style="background-image: url('img/netdisk.png')" ></i>
-                <i class="labl">百度云同步</i>
-            </a>
-        </li>
-
-        <li id="div1" class="list-item menu-item" >
-            <a href="http://yc.xunlei.com" >
-                <i class="icon" style="background-image: url('img/yuanchen.png')" ></i>
-                <i class="labl" >远程下载</i>
-            </a>
-        </li>
-
-		<li id="div1" class="list-item menu-item" >
-            <a href="https://h.yuncore.cn" >
-                <i class="icon" style="background-image: url('img/wifi.png')" ></i>
-                <i class="labl" >小米路由</i>
-            </a>
-        </li>
-
-        <li id="div1" class="list-item menu-item" >
             <a href="#" id="status" >
                 <i class="icon" style="background-image: url('img/status.png')" ></i>
                 <i class="labl" >服务状态</i>
-            </a>
-        </li>
-
-        <li id="div1" class="list-item menu-item" >
-            <a href="#" id="exit" >
-                <i class="icon" style="background-image: url('img/logoff.png')" ></i>
-                <i class="labl" >退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出</i>
             </a>
         </li>
 

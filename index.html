@@ -17,74 +17,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-
-            if ($.cookie('oauth')) {
-                window.location.replace('main.html?oauth=' +  getOauth());
-            }
-
-            $('#login_btn').bind('click', login);
-            $('#uname').bind('keypress', function (event) {
-
-                if (event.keyCode == "13") {
-                    $('#passwd').focus();
-                }
-            });
-            $('#passwd').bind('keypress', function (event) {
-
-                if (event.keyCode == "13") {
-                    login();
-                }
-            });
-
-            if (agent() == 'iPhone') {
-                $('#container').addClass('continer_iphone');
-            }
-            //ipad pc 登录框
-            else {
-                $('#container').addClass('continer_ipad_pc');
-                $('#login_box').addClass('login_box_ipad');
-            }
-
+        	window.location.replace('main.html?oauth=' + getOauth());
         });
-
-        /**
-         * 登录
-         */
-        function login() {
-
-            var uname = $.trim($('#uname').val());
-            var passwd = $.trim($('#passwd').val());
-
-            if (uname == "") {
-                $('#uname').focus();
-            } else if (passwd == "") {
-                $('passwd').focus();
-            } else {
-
-                var url = "{0}login/{1}.php?action=login&uname={2}&passwd={3}".format(platform_service, parseInt(Math.random() * 10000000), uname, passwd);
-
-                $.ajax({url: url, success: function (data) {
-
-                    if (data && data.data) {
-                        
-                        if (getArgs("callback") !== ""){
-                            var jump = Base64.decode(getArgs("callback")) + data.data;
-                            window.location = jump
-                        } else {
-                            //保存到cookie
-                            $.cookie('oauth', data.data, { expires: 100 });
-                            window.location.replace('main.html?oauth=' +  getOauth());
-                        }
-                    } else {
-                        alert("用户名或者密码错误");
-                        $('#uname').focus();
-                    }
-
-                }});
-
-            }
-
-        }
 
     </script>
 

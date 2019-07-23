@@ -269,6 +269,9 @@ function getOauth() {
     if (!oauth) {
         oauth = getArgs("oauth");
     }
+    if (!oauth) {
+        oauth = "pi";
+    }
     return oauth;
 
 }

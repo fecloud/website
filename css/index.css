@@ -10,8 +10,8 @@ body {
 }
 
 #header {
-    background-color: #007aff;
-    border-bottom: none;
+    background-color: #ffffff;
+    /*border-bottom: none;*/
 }
 
 #header h1{
