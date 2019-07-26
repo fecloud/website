@@ -18,8 +18,14 @@
     <script type="text/javascript" src="../js/switchery.min.js"></script>
     <script type="text/javascript">
 
-        $(document).ready(function () {
+		function show_time() {
+			var time1 = new Date().format("yyyy-MM-dd hh:mm:ss"); 
+			$('#settime').html(time1);
+		}		
 
+        $(document).ready(function () {
+			
+			setInterval("show_time()", 1000);
             if (agentWechatOrQQ()) {
                 $('#header').css('display','none');
                 $('#services').css('margin-top','0px');
@@ -108,7 +114,7 @@
 
             }});
 
-            $.ajax({url: "{0}{1}.php?action=df&oauth={2}&value={3}".format(status_service, randomInt(), getOauth(), "/dev/sda2"), success: function (data) {
+            $.ajax({url: "{0}{1}.php?action=df&oauth={2}&value={3}".format(status_service, randomInt(), getOauth(), "/dev/root"), success: function (data) {
 
                 if (data.data) {
                     var arr = data.data;
@@ -136,6 +142,19 @@
 
             }});
 
+			$('#set_server_time').click(function(){
+				var time1 = new Date().format("yyyy-MM-dd hh:mm:ss"); 
+				$.ajax({url: "{0}{1}.php?action=settime&time={3}&oauth={2}".format(status_service, randomInt(), getOauth(), time1), success: function (data) {
+
+                if (data.data) {
+                    $('#server_uptime').html(data.data);
+                } else {
+                    $('#server_uptime').html('暂无');
+                }
+
+            }});
+			
+			});
         });
 
     </script>
@@ -194,7 +213,14 @@
         </li>
 
     </ul>
-
+ 	<ul class="list group">
+        <li class="list-item" id="set_server_time">
+            <div class="box">
+                <div class="content">当前时间</div>
+                <div class="service_operate text_right" id="settime">...</div>
+            </div>
+        </li>
+	</ul>
     <ul id="env" class="list group">
         <li class="list-item">
             <div class="box">

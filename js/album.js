@@ -44,8 +44,9 @@ $(document).ready(function () {
 function comp_photos_width() {
 
     var doc_width = $(document).width();
-
-        if (doc_width == 320) {
+		if (doc_width == 375) {
+			content_css = 'content-375'
+        }else if (doc_width == 320) {
             content_css = 'content-320';
         }else if(doc_width == 480){
             content_css = 'content-480';
@@ -69,12 +70,12 @@ function load_data() {
 
             if (data && data.data) {
                 data.data.forEach(function (pic) {
-                    var h = "<div style=\"background-image: url('{0}');\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a></div>";
+                    var h = "<div style=\"background-image: url('{0}');\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a><div style=\"color: #000;position:absolute;left: 20px;bottom:0px;line-height:30px;height:30px;\">{2}</div><div style=\"background:#000;opacity: 0.5;position: absolute;left:0px;bottom:0px;height:30px;width:100%;\"></div></div>";
                     var itme_thum = "/photos/" + getArgs("path") + "/" + pic ;
-                    var itme_thum_formt = "{0}imageview.php?oauth={1}&action=imageview&value={2}&width={3}&height={4}";
-                    itme_thum = itme_thum_formt.format(imageview_service, getOauth(), encodeURI(itme_thum), 160, 160);
-                    var item_src = "/src/photos/" + getArgs("path") + "/" + pic + "?oauth=" + getOauth();
-                    var item = h.format(itme_thum, item_src);
+                    var itme_thum_formt = "/thumb/{0}.jpg";
+                    itme_thum = itme_thum_formt.format(pic);
+                    var item_src = "/src/" + getArgs("path") + "/" + pic + "?oauth=" + getOauth();
+                    var item = h.format(itme_thum, item_src, pic.replace("video_","").replace(".mp4",""));
                     $('#content').append(item);
                 });
             }

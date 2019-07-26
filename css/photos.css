@@ -92,6 +92,19 @@ body {
     background-size: 77px 77px;
 }
 
+.content-375 {
+    padding: 0px;
+    margin-left: -5px;
+}
+
+.content-375 .album-item-set {
+    width: 185px;
+    height: 185px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    background-size: 185px 185px;
+}
+
 .content-480 {
     padding: 0px;
     margin-left: -1.5px;
