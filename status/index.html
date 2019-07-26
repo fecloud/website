@@ -147,9 +147,7 @@
 				$.ajax({url: "{0}{1}.php?action=settime&time={3}&oauth={2}".format(status_service, randomInt(), getOauth(), time1), success: function (data) {
 
                 if (data.data) {
-                    $('#server_uptime').html(data.data);
-                } else {
-                    $('#server_uptime').html('暂无');
+					alert(data.data + "  设置成功！");
                 }
 
             }});
@@ -304,7 +302,7 @@
 
 
     <div style="text-align: center;margin: 10px 0 20px 0;" class="ios7_font">
-        Copyright FCloud, Inc
+        Copyright MOCAR, Inc
     </div>
 
 </div>

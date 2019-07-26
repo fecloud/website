@@ -70,7 +70,7 @@ function load_data() {
 
             if (data && data.data) {
                 data.data.forEach(function (pic) {
-                    var h = "<div style=\"background-image: url('{0}');\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a><div style=\"color: #000;position:absolute;left: 20px;bottom:0px;line-height:30px;height:30px;\">{2}</div><div style=\"background:#000;opacity: 0.5;position: absolute;left:0px;bottom:0px;height:30px;width:100%;\"></div></div>";
+                    var h = "<div style=\"background-image: url('{0}');\" class=\"album-item album-item-set\" ><a href=\"{1}\" ></a><div style=\"color: #000;position:absolute;left: 20px;bottom:0px;line-height:30px;height:30px;\">{2}</div><div style=\"background:#000;opacity: 0.3;position: absolute;left:0px;bottom:0px;height:30px;width:100%;\"></div></div>";
                     var itme_thum = "/photos/" + getArgs("path") + "/" + pic ;
                     var itme_thum_formt = "/thumb/{0}.jpg";
                     itme_thum = itme_thum_formt.format(pic);
