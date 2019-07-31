@@ -26,9 +26,9 @@
             $("#photos").attr("href",function() { return "photos/album.html?oauth=" + getOauth() + "&path=/&name=movie"});
             $("#status").attr("href",function() { return "status?oauth=" + getOauth()});
 
-			var btn =  document.getElementById('copyrtmp');    
-    		var clipboard = new ClipboardJS("copyrtmp");    
-    		clipboard.on('success', function(e) {        
+    		var clipboard = new ClipboardJS("#copyrtmp");    
+    		clipboard.on('success', function(e) {     
+				e.clearSelection(); 
         		alert("复制成功!");
    			 });    
     		clipboard.on('error', function(e) {        
@@ -59,11 +59,12 @@
             </a>
         </li>
 
-        <li id="div1" class="list-item menu-item"  :data-clipboard-text="rtmp://10.0.8.1/live/demo" style="cursor:pointer;" onclick="" id="copyrtmp" >
+        <li class="list-item menu-item"  data-clipboard-action="copy" data-clipboard-target="#target" style="cursor:pointer;" onclick="" id="copyrtmp" >
             <a href="#" id="live">
                 <i class="icon" style="background-image: url('img/camera.png')"  ></i>
                 <i class="labl" >远程监控</i>
             </a>
+			<span id="target">rtmp://10.0.8/live/demo</span>
         </li>
 
         <li id="div1" class="list-item menu-item" >
@@ -76,6 +77,5 @@
     </ul>
 
 </div>
-
 </body>
 </html>
